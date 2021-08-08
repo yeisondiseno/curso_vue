@@ -1,0 +1,54 @@
+
+body{
+    padding: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#app{
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+button{
+    color: crimson;
+    padding: 10px 15px;
+    border: solid 1px crimson;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    color: lightcoral;
+    border-color: lightcoral;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+img{
+    max-width: 100px;
+}
+
+ul li {
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+input{
+    border: solid 1px #e0e0e0;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
+.green{
+    color: seagreen;
+}
+
+.red{
+    color: crimson;
+}
+
+.orange{
+    color: orange;
+}
