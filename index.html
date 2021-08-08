@@ -10,7 +10,11 @@
 <body>
 
     <div id='app' >
-        <img v-bind:src="img" v-bind:alt="name" >
+        <img 
+            v-bind:src="img" 
+            v-bind:alt="name"
+            v-on:mouseover='toggleShowPrices' 
+        >
         <h1>
             {{name}}
             <span v-if='changePercent > 0 '>
@@ -22,17 +26,21 @@
             <span v-else>
                 Es cero
             </span>
-            <br>
-            <span v-show='changePercent > 0 '>
-                Es mayor a cero
-            </span>
-            <span v-show='changePercent < 0'>
-                Es menor a cero
-            </span>
-            <span v-show='changePercent === 0'>
-                Es cero
-            </span>
         </h1>
+
+        <button v-on:click='toggleShowPrices'> 
+            {{ 
+                !showPrices 
+                    ? 'Mostrar precios' 
+                    : 'Ocultar precios' 
+            }}
+        </button>
+
+        <ul v-show='showPrices'>
+            <li v-for='(p, i) in pricesWithDays' v-bind:key='p'>
+                {{i + 1 }} - {{p.value}} - {{p.day}}
+            </li>
+        </ul>
     </div>
 
     <script defer src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
