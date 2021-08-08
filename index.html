@@ -9,14 +9,19 @@
 </head>
 <body>
 
-    <div id='app' >
+    <div 
+        id='app' 
+        v-bind:style='{ background: `#${color}` }'
+    >
         <img 
             v-bind:src="img" 
             v-bind:alt="name"
             v-on:mouseover='toggleShowPrices' 
+            v-on:mouseout='toggleShowPrices' 
         >
-        <h1>
-            {{name}}
+        <h1 v-bind:class="changePercent > 0 ? 'green' : 'red'">
+            {{title}}
+            <br>
             <span v-if='changePercent > 0 '>
                 Es mayor a cero
             </span>
@@ -37,7 +42,15 @@
         </button>
 
         <ul v-show='showPrices'>
-            <li v-for='(p, i) in pricesWithDays' v-bind:key='p'>
+            <li 
+                v-for='(p, i) in pricesWithDays' 
+                v-bind:key='p.value'
+                v-bind:class="{
+                    orange: p.value === price,
+                    red: p.value < price,
+                    green: p.value > price,
+                }"
+            >
                 {{i + 1 }} - {{p.value}} - {{p.day}}
             </li>
         </ul>

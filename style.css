@@ -4,6 +4,12 @@ body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+#app{
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
 button{
     color: crimson;
     padding: 10px 15px;
@@ -21,5 +27,22 @@ button:hover{
 }
 
 img{
-    max-width: 300px;
+    max-width: 100px;
+}
+
+ul li {
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.green{
+    color: seagreen;
+}
+
+.red{
+    color: crimson;
+}
+
+.orange{
+    color: orange;
 }
