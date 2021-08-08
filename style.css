@@ -35,6 +35,12 @@ ul li {
     line-height: 1.5;
 }
 
+input{
+    border: solid 1px #e0e0e0;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
 .green{
     color: seagreen;
 }

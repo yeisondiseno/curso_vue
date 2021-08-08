@@ -33,6 +33,18 @@
             </span>
         </h1>
 
+        <input 
+            type="number"
+            v-model='value'
+        >
+        <br>
+        <span>
+            {{convertedValue}}
+        </span>
+        <br>
+        <br>
+        
+
         <button v-on:click='toggleShowPrices'> 
             {{ 
                 !showPrices 
