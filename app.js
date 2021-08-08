@@ -65,6 +65,10 @@ Vue.component('CoinDetail', {
             </span>
             <br>
             <br>
+            <slot name='text' ></slot>
+            <slot name='link' ></slot>
+            <br>
+            <br>
 
             <button v-on:click='toggleShowPrices'> 
                 {{ 
