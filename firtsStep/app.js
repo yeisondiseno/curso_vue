@@ -1,48 +1,48 @@
 Vue.component('CoinDetail', {
 
-    props: ['coin'],
+  props: ['coin'],
 
-    data () {
-        return {
-            showPrices: false,
-            value: 0,
-            changePercent: 0,
-        }
+  data () {
+    return {
+      showPrices: false,
+      value: 0,
+      changePercent: 0
+    }
+  },
+
+  methods: {
+    toggleShowPrices () {
+      this.showPrices = !this.showPrices
+
+      this.$emit(
+        'change-color',
+        this.showPrices ? 'FF96C8' : '3D3D3D'
+      )
+    }
+  },
+
+  computed: {
+    title () {
+      return `${this.coin.name} - ${this.coin.symbol}`
     },
+    convertedValue () {
+      if (!this.value) {
+        return 0
+      }
 
-    methods: {
-        toggleShowPrices() {
-            this.showPrices = !this.showPrices
+      return this.value / this.coin.price
+    }
+  },
 
-            this.$emit(
-                'change-color', 
-                this.showPrices ? 'FF96C8' : '3D3D3D'
-            )
-        }
-    },
+  created () {
+    console.log('created coindetail')
+  },
 
-    computed: {
-        title () {
-            return `${this.coin.name} - ${this.coin.symbol}`
-        },
-        convertedValue () {
-            if (!this.value) {
-                return 0
-            }
+  mounted () {
+    console.log('mounted coindetail')
+  },
 
-            return this.value / this.coin.price
-        }
-    },
-
-    created () {
-        console.log('created coindetail')
-    },
-
-    mounted () {
-        console.log('mounted coindetail')
-    },
-
-    template: `
+  template: `
         <div>
             <img 
                 v-bind:src="coin.img" 
@@ -104,45 +104,45 @@ Vue.component('CoinDetail', {
 })
 
 new Vue({
-    el: '#app',
+  el: '#app',
 
-    data () {
-        return {
-            btc: {
-                name: 'Bitcoin',
-                symbol: 'BTC',
-                img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
-                changePercent: 0,
-                price: 8200,
+  data () {
+    return {
+      btc: {
+        name: 'Bitcoin',
+        symbol: 'BTC',
+        img: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
+        changePercent: 0,
+        price: 8200,
 
-                pricesWithDays: [
-                    { day: 'Lunes', value: 8400 },
-                    { day: 'Martes', value: 7900 },
-                    { day: 'Miercoles', value: 8200 },
-                    { day: 'Jueves', value: 9000 },
-                    { day: 'Viernes', value: 9400 },
-                    { day: 'Sabado', value: 10000 },
-                    { day: 'Domingo', value: 10200 },
-                ],
-            },
+        pricesWithDays: [
+          { day: 'Lunes', value: 8400 },
+          { day: 'Martes', value: 7900 },
+          { day: 'Miercoles', value: 8200 },
+          { day: 'Jueves', value: 9000 },
+          { day: 'Viernes', value: 9400 },
+          { day: 'Sabado', value: 10000 },
+          { day: 'Domingo', value: 10200 }
+        ]
+      },
 
-            color: 'f4f4f4',
-        }
-    },
-
-    created () {
-        console.log('created')
-    },
-
-    mounted () {
-        console.log('mounted')
-    },
-
-    methods: {
-        updateColor (color) {
-            this.color = color || this.color.split('')
-                            .reverse()
-                            .join('')
-        }
+      color: 'f4f4f4'
     }
+  },
+
+  created () {
+    console.log('created')
+  },
+
+  mounted () {
+    console.log('mounted')
+  },
+
+  methods: {
+    updateColor (color) {
+      this.color = color || this.color.split('')
+        .reverse()
+        .join('')
+    }
+  }
 })
