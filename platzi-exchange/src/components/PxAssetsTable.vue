@@ -30,14 +30,14 @@
 <script>
 
 export default {
-    name: 'PxAssetsTable',
+  name: 'PxAssetsTable',
 
-    props: {
-        assets: {
-            type: Array,
-            default: () => {}
-        }
+  props: {
+    assets: {
+      type: Array,
+      default: () => {}
     }
+  }
 }
 </script>
 
