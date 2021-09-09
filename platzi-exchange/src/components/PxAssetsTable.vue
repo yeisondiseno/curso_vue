@@ -20,7 +20,11 @@
         class="border-b border-gray-200 hover:bg-gray-100 hover:bg-orange-100"
       >
         <td>
-          <img :src="`https://static.coincap.io/assets/icons/${a.symbol.toLowerCase()}@2x.png`" :alt="a.name">
+          <img 
+            class="w-6 h-6"
+            :src="`https://static.coincap.io/assets/icons/${a.symbol.toLowerCase()}@2x.png`" 
+            :alt="a.name"
+          >
         </td>
         <td>
           <b>
@@ -31,13 +35,13 @@
           {{a.name}}
         </td>
         <td>
-          ${{a.priceUsd}}
+          {{ $filters.DollarFilter(a.priceUsd) }}
         </td>
         <td>
-          ${{a.marketCapUsd}}
+          ${{ $filters.DollarFilter(a.marketCapUsd) }}
         </td>
-        <td>
-          {{a.changePercent24Hr}}
+        <td :class="a.changePercent24Hr.includes('-') ? 'text-red-600' : 'text-green-600'">
+          {{ $filters.PercentFilter(a.changePercent24Hr) }}
         </td>
         <td class="hidden sm:block"></td>
       </tr>
@@ -46,16 +50,18 @@
 </template>
 
 <script>
-export default {
-  name: "PxAssetsTable",
 
-  props: {
-    assets: {
-      type: Array,
-      default: () => {},
+
+  export default {
+    name: "PxAssetsTable",
+
+    props: {
+      assets: {
+        type: Array,
+        default: () => {},
+      },
     },
-  },
-};
+  };
 </script>
 
 <style scoped>
