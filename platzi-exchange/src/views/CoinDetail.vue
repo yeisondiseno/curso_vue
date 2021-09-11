@@ -22,7 +22,7 @@
             </li>
             <li class="flex justify-between">
               <b class="text-gray-600 mr-10 uppercase">Precio actual</b>
-              <span>{{   $filters.DollarFilter(asset.priceUsd) }}</span>
+              <span>{{ $filters.DollarFilter(asset.priceUsd) }}</span>
             </li>
             <li class="flex justify-between">
               <b class="text-gray-600 mr-10 uppercase">Precio más bajo</b>
@@ -38,7 +38,7 @@
             </li>
             <li class="flex justify-between">
               <b class="text-gray-600 mr-10 uppercase">Variación 24hs</b>
-              <span>{{  $filters.PercentFilter(asset.changePercent24Hr) }}</span>
+              <span>{{ $filters.PercentFilter(asset.changePercent24Hr) }}</span>
             </li>
           </ul>
         </div>
@@ -89,14 +89,33 @@
 
 <script>
 import api from "@/api";
-import { useRoute } from 'vue-router'
+import { useRoute } from "vue-router";
 
 export default {
   name: "CoinDetail",
   data() {
     return {
       asset: {},
+      history: {},
     };
+  },
+
+  computed: {
+    min() {
+      return Math.min(
+        ...this.history.map((value) => parseFloat(value.priceUsd).toFixed(2))
+      );
+    },
+    max() {
+      return Math.max(
+        ...this.history.map((value) => parseFloat(value.priceUsd).toFixed(2))
+      );
+    },
+    avg() {
+      return Math.abs(
+        ...this.history.map((value) => parseFloat(value.priceUsd).toFixed(2))
+      );
+    },
   },
 
   created() {
@@ -105,9 +124,15 @@ export default {
 
   methods: {
     getCoin() {
-      const route = useRoute()
+      const route = useRoute();
       const id = route.params.id;
-      api.getAsset(id).then((asset) => (this.asset = asset));
+      console.log("id", id);
+      Promise.all([api.getAsset(id), api.getAssetHistory(id)]).then(
+        ([asset, history]) => {
+          this.asset = asset;
+          this.history = history;
+        }
+      );
     },
   },
 };
