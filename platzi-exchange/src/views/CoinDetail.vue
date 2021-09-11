@@ -1,6 +1,7 @@
 <template>
   <div class="flex-col">
-    <template v-if="asset.id">
+    <BarLoader :loading="loading" :color="'#68d391'" :size="'100px'" />
+    <template v-if="asset?.id && !loading">
       <div class="flex flex-col sm:flex-row justify-around items-center">
         <div class="flex flex-col items-center">
           <img
@@ -79,9 +80,19 @@
               />
             </label>
           </div>
-
           <span class="text-xl"></span>
         </div>
+      </div>
+      <div class="flex flex-row my-5">
+        <line-chart
+          class="my-10"
+          :colors="['orange']"
+          :min="min"
+          :max="max"
+          :data="
+            history.map((e) => [e.date, parseFloat(e.priceUsd).toFixed(2)])
+          "
+        />
       </div>
     </template>
   </div>
@@ -90,11 +101,14 @@
 <script>
 import api from "@/api";
 import { useRoute } from "vue-router";
+import BarLoader from "@saeris/vue-spinners";
 
 export default {
   name: "CoinDetail",
+  components: { BarLoader },
   data() {
     return {
+      isLoading: true,
       asset: {},
       history: {},
     };
@@ -127,12 +141,12 @@ export default {
       const route = useRoute();
       const id = route.params.id;
       console.log("id", id);
-      Promise.all([api.getAsset(id), api.getAssetHistory(id)]).then(
-        ([asset, history]) => {
+      Promise.all([api.getAsset(id), api.getAssetHistory(id)])
+        .then(([asset, history]) => {
           this.asset = asset;
           this.history = history;
-        }
-      );
+        })
+        .finally(() => (this.isLoading = false));
     },
   },
 };
