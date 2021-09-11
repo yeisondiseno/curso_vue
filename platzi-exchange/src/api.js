@@ -23,8 +23,24 @@ function getAssetHistory(coin) {
     .catch((error) => console.error("Este es el error", error));
 }
 
+function getMarket(coin) {
+  return fetch(`${url}/assets/${normalizeRoute(coin)}/markets?limit=5`)
+    .then((res) => res.json())
+    .then((res) => res.data)
+    .catch((error) => console.error("Este es el error", error));
+}
+
+function getExchange(id) {
+  return fetch(`${url}/exchanges/${normalizeRoute(id)}`)
+    .then((res) => res.json())
+    .then((res) => res.data)
+    .catch((error) => console.error("Este es el error", error));
+}
+
 export default {
   getAssets,
   getAsset,
   getAssetHistory,
+  getMarket,
+  getExchange,
 };

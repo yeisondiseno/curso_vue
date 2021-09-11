@@ -9,11 +9,15 @@
     "lint-fix": "vue-cli-service lint --fix"
   },
   "dependencies": {
+    "@saeris/vue-spinners": "^1.0.8",
+    "chart.js": "^3.5.1",
     "core-js": "^3.6.5",
     "numeral": "^2.0.6",
     "tailwindcss": "^1.1.2",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.11"
+    "vue-chartkick": "^1.1.0",
+    "vue-router": "^4.0.11",
+    "vue-spinner": "^1.0.4"
   },
   "devDependencies": {
     "@ianaya89/vue-cli-plugin-tailwind": "~1.1.0",
