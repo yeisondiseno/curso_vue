@@ -15,32 +15,34 @@
     </thead>
     <tbody>
       <tr
-        v-for='a in assets'
-        :key='a.id'
+        v-for="a in assets"
+        :key="a.id"
         class="border-b border-gray-200 hover:bg-gray-100 hover:bg-orange-100"
       >
         <td>
-          <img 
+          <img
             class="w-6 h-6"
-            :src="`https://static.coincap.io/assets/icons/${a.symbol.toLowerCase()}@2x.png`" 
+            :src="`https://static.coincap.io/assets/icons/${a.symbol.toLowerCase()}@2x.png`"
             :alt="a.name"
-          >
+          />
         </td>
         <td>
-          <b>
-            # {{a.rank}}
-          </b>
+          <b> # {{ a.rank }} </b>
         </td>
         <td>
-          {{a.name}}
+          {{ a.name }}
         </td>
         <td>
           {{ $filters.DollarFilter(a.priceUsd) }}
         </td>
-        <td>
-          ${{ $filters.DollarFilter(a.marketCapUsd) }}
-        </td>
-        <td :class="a.changePercent24Hr.includes('-') ? 'text-red-600' : 'text-green-600'">
+        <td>${{ $filters.DollarFilter(a.marketCapUsd) }}</td>
+        <td
+          :class="
+            a.changePercent24Hr.includes('-')
+              ? 'text-red-600'
+              : 'text-green-600'
+          "
+        >
           {{ $filters.PercentFilter(a.changePercent24Hr) }}
         </td>
         <td class="hidden sm:block"></td>
@@ -50,18 +52,16 @@
 </template>
 
 <script>
+export default {
+  name: "PxAssetsTable",
 
-
-  export default {
-    name: "PxAssetsTable",
-
-    props: {
-      assets: {
-        type: Array,
-        default: () => {},
-      },
+  props: {
+    assets: {
+      type: Array,
+      default: () => {},
     },
-  };
+  },
+};
 </script>
 
 <style scoped>
