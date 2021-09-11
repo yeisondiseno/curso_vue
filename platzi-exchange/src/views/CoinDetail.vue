@@ -1,7 +1,6 @@
 <template>
   <div class="flex-col">
-    <BarLoader :loading="loading" :color="'#68d391'" :size="'100px'" />
-    <template v-if="asset?.id && !loading">
+    <template v-if="asset?.id">
       <div class="flex flex-col sm:flex-row justify-around items-center">
         <div class="flex flex-col items-center">
           <img
@@ -94,6 +93,34 @@
           "
         />
       </div>
+      <div class="flex flex-col my-5">
+        <h3 class="text-xl my-10">Mejores Ofertas de Cambio</h3>
+        <table>
+          <tr
+            v-for:="m in market"
+            :key="`${m.exchangeId}-${m.priceUsd}`"
+            class="border-b"
+          >
+            <td>
+              <b>
+                {{ m.exchangeId }}
+              </b>
+            </td>
+            <td>
+              {{ $filters.DollarFilter(m.priceUsd) }}
+            </td>
+            <td>{{ m.baseSymbol }} / {{ m.quoteSymbol }}</td>
+            <td>
+              <px-button v-if="!m.url" v-on:click="getWebsite(m)">
+                <slot>Obtener Link</slot>
+              </px-button>
+              <a v-else class="hover:underline text-green-600" target="_blanck">
+                {{ m.url }}
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
     </template>
   </div>
 </template>
@@ -101,16 +128,16 @@
 <script>
 import api from "@/api";
 import { useRoute } from "vue-router";
-import BarLoader from "@saeris/vue-spinners";
+import PxButton from "@/components/PxButton";
 
 export default {
   name: "CoinDetail",
-  components: { BarLoader },
+  components: { PxButton },
   data() {
     return {
-      isLoading: true,
       asset: {},
-      history: {},
+      history: [],
+      market: [],
     };
   },
 
@@ -133,20 +160,36 @@ export default {
   },
 
   created() {
-    this.getCoin();
+    const route = useRoute();
+    const id = route.params.id;
+    this.getCoin(id);
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    this.getCoin(to.params.id);
+    next();
   },
 
   methods: {
-    getCoin() {
-      const route = useRoute();
-      const id = route.params.id;
-      console.log("id", id);
-      Promise.all([api.getAsset(id), api.getAssetHistory(id)])
-        .then(([asset, history]) => {
+    getCoin(id) {
+      Promise.all([
+        api.getAsset(id),
+        api.getAssetHistory(id),
+        api.getMarket(id),
+      ])
+        .then(([asset, history, market]) => {
           this.asset = asset;
           this.history = history;
+          this.market = market;
         })
         .finally(() => (this.isLoading = false));
+    },
+
+    getWebsite(exchange) {
+      return api.getExchange(exchange.exchangeId).then((res) => {
+        exchange.url = res.exchangeUrl;
+        this.$set(exchange, "url", res.exchangeUrl);
+      });
     },
   },
 };
